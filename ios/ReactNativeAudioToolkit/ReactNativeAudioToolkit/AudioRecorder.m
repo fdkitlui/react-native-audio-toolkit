@@ -133,7 +133,10 @@ RCT_EXPORT_METHOD(prepare:(nonnull NSNumber *)recorderId
     // Initialize audio session
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     NSError *error = nil;
-    [audioSession setCategory:AVAudioSessionCategoryRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:&error];
+    // [audioSession setCategory:AVAudioSessionCategoryRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:&error];
+    // fixed: recording via apple airpods.
+    // https://github.com/react-native-community/react-native-audio-toolkit/pull/169/commits/081aedbbfb1ad972133ed6fce2bd29c7d1d153f4
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:&error];
     if (error) {
         NSDictionary* dict = [Helpers errObjWithCode:@"preparefail" withMessage:@"Failed to set audio session category"];
         callback(@[dict]);
